@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Virtual de Matemáticas - Resta</title>
+    <link rel="stylesheet" href="sum.css">
+</head>
+<body>
+    <div class="progress">
+        Progreso: <progress id="progress3" value="0" max="100"></progress>
+    </div>
+
+    <div class="container">
+        <h1>Tutor Virtual de Matemáticas - Resta</h1>
+        
+        <div class="section">
+            <h2>Números Enteros</h2>
+            <p>Hoy aprenderemos a restar. La resta es quitar algo de un grupo. Por ejemplo, si tienes 12 manzanas y comes 4, ¿cuántas te quedan?</p>
+            <div class="example">
+                <p><strong>Problema:</strong> ¿Cuánto es 12 - 4?</p>
+                <p><strong>Paso 1:</strong> Comienza con 12 y quita 4.</p>
+                <p><strong>Paso 2:</strong> Si cuentas hacia atrás desde 12, llegas a 8.</p>
+                <p><strong>Respuesta:</strong> 12 - 4 = 8.</p>
+                <button onclick="toggleAdvice('adviceR1')">Ver Consejo</button>
+                <div id="adviceR1" class="advice" style="display:none;">
+                    <p>Recuerda, restar significa quitar. Puedes usar tus dedos para contar.</p>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Fácil</h3>
+                <p>¿Cuánto es 10 - 3?</p>
+                <form>
+                    <input type="radio" name="q1" value="6"> 6<br>
+                    <input type="radio" name="q1" value="7"> 7<br>
+                    <input type="radio" name="q1" value="8"> 8<br>
+                    <button type="button" onclick="checkAnswer('q1', '7', 'progress3')">Enviar</button>
+                </form>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Medio</h3>
+                <p>¿Cuánto es 15 - 7?</p>
+                <form>
+                    <input type="radio" name="q2" value="6"> 6<br>
+                    <input type="radio" name="q2" value="7"> 7<br>
+                    <input type="radio" name="q2" value="8"> 8<br>
+                    <button type="button" onclick="checkAnswer('q2', '8', 'progress3')">Enviar</button>
+                </form>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Difícil</h3>
+                <p>¿Cuánto es 20 - 15?</p>
+                <form>
+                    <input type="radio" name="q3" value="4"> 4<br>
+                    <input type="radio" name="q3" value="5"> 5<br>
+                    <input type="radio" name="q3" value="6"> 6<br>
+                    <button type="button" onclick="checkAnswer('q3', '5', 'progress3')">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Fracciones</h2>
+            <p>Las fracciones también se pueden restar. Veamos cómo.</p>
+            <div class="example">
+                <p><strong>Problema:</strong> ¿Cuánto es (3/4 - 1/4)?</p>
+                <p><strong>Paso 1:</strong> Ambas fracciones tienen el mismo denominador.</p>
+                <p><strong>Paso 2:</strong> Resta los numeradores: 3 - 1 = 2.</p>
+                <p><strong>Paso 3:</strong> El resultado es 2/4, que se simplifica a 1/2.</p>
+                <button onclick="toggleAdvice('adviceR2')">Ver Consejo</button>
+                <div id="adviceR2" class="advice" style="display:none;">
+                    <p>Cuando las fracciones tienen el mismo denominador, solo resta los numeradores.</p>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Fácil</h3>
+                <p>¿Cuánto es (1/2 - 1/4)?</p>
+                <form>
+                    <input type="radio" name="q4" value="1/4"> 1/4<br>
+                    <input type="radio" name="q4" value="1/2"> 1/2<br>
+                    <input type="radio" name="q4" value="3/4"> 3/4<br>
+                    <button type="button" onclick="checkAnswer('q4', '1/4', 'progress3')">Enviar</button>
+                </form>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Medio</h3>
+                <p>¿Cuánto es (3/4 - 1/2)?</p>
+                <form>
+                    <input type="radio" name="q5" value="1/4"> 1/4<br>
+                    <input type="radio" name="q5" value="1/2"> 1/2<br>
+                    <input type="radio" name="q5" value="1/3"> 1/3<br>
+                    <button type="button" onclick="checkAnswer('q5', '1/4', 'progress3')">Enviar</button>
+                </form>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Difícil</h3>
+                <p>¿Cuánto es (5/6 - 1/3)?</p>
+                <form>
+                    <input type="radio" name="q6" value="1/2"> 1/2<br>
+                    <input type="radio" name="q6" value="1/3"> 1/3<br>
+                    <input type="radio" name="q6" value="2/3"> 2/3<br>
+                    <button type="button" onclick="checkAnswer('q6', '1/2', 'progress3')">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+        <p><a href="mate.html">Volver al Menú Principal</a></p>
+    </div>
+
+    <script>
+        function toggleAdvice(adviceId) {
+            const adviceElement = document.getElementById(adviceId);
+            if (adviceElement.style.display === "none") {
+                adviceElement.style.display = "block";
+            } else {
+                adviceElement.style.display = "none";
+            }
+        }
+
+        function checkAnswer(question, correctAnswer, progressId) {
+            const radios = document.getElementsByName(question);
+            let selectedAnswer;
+            for (const radio of radios) {
+                if (radio.checked) {
+                    selectedAnswer = radio.value;
+                    break;
+                }
+            }
+
+            const progressElement = document.getElementById(progressId);
+            if (selectedAnswer === correctAnswer) {
+                alert("¡Correcto!");
+                // Incrementa el progreso
+                progressElement.value = Math.min(progressElement.value + (100 / 6), 100); // Ajusta según el número total de preguntas
+            } else {
+                alert("Intenta de nuevo.");
+            }
+        }
+    </script>
+</body>
+</html>

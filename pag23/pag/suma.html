@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Virtual de Matemáticas - Suma</title>
+    <link rel="stylesheet" href="sum.css">
+    <link rel="stylesheet" href="scripretro.js">
+</head>
+<body>
+    <div class="progress">
+        Progreso: <progress id="progress1" value="0" max="100"></progress>
+    </div>
+
+    <div class="container">
+        <h1>Tutor Virtual de Matemáticas - Suma</h1>
+        
+        <div class="section">
+            <h2>Números Enteros</h2>
+            <p>La suma es como juntar cosas. Si tienes 12 caramelos y tu amigo te da 8 más, ¿cuántos caramelos tienes ahora?</p>
+            <div class="example">
+                <p><strong>Problema:</strong> ¿Cuánto es 12 + 8?</p>
+                <p><strong>Paso 1:</strong> Junta los caramelos: 12 + 8.</p>
+                <p><strong>Paso 2:</strong> Cuenta todos los caramelos juntos.</p>
+                <p><strong>Respuesta:</strong> 12 + 8 = 20.</p>
+                <button onclick="toggleAdvice('adviceS1')">Ver Consejo</button>
+                <div id="adviceS1" class="advice" style="display:none;">
+                    <p>Para sumar, solo necesitas juntar los números.</p>
+                </div>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Fácil</h3>
+                <p>¿Cuánto es 5 + 3?</p>
+                <form>
+                    <input type="radio" name="q1" value="8"> 8<br>
+                    <input type="radio" name="q1" value="7"> 7<br>
+                    <input type="radio" name="q1" value="9"> 9<br>
+                    <button type="button" onclick="checkAnswer('q1', '8', 'progress1')">Enviar</button>
+                    
+                    <button type="button" id="botonConsulta">Retroalimentacion</button>
+                    <pre id="resultadoConsulta"></pre>
+                </form>
+                
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Medio</h3>
+                <p>¿Cuánto es 15 + 5?</p>
+                <form>
+                    <input type="radio" name="q2" value="21"> 21<br>
+                    <input type="radio" name="q2" value="19"> 19<br>
+                    <input type="radio" name="q2" value="20"> 20<br>
+                    <button type="button" onclick="checkAnswer('q2', '20', 'progress1')">Enviar</button>
+
+                    <button type="button" id="botonConsulta">Retroalimentacion</button>
+                    <div class="pre"><pre id="resultadoConsulta"></pre></div>
+                </form>
+            </div>
+
+            <div class="exercise">
+                <h3>Ejercicio Difícil</h3>
+                <p>¿Cuánto es 22 + 37?</p>
+                <form>
+                    <input type="radio" name="q3" value="60"> 60<br>
+                    <input type="radio" name="q3" value="59"> 59<br>
+                    <input type="radio" name="q3" value="58"> 58<br>
+                    <button type="button" onclick="checkAnswer('q3', '59', 'progress1')">Enviar</button>
+
+                    <button type="button" id="botonConsulta">Retroalimentacion</button>
+                    <pre id="resultadoConsulta"></pre>
+                </form>
+            </div>
+        </div>
+        <button id="notifyButton">Enviar</button>
+
+        <button><a href="mate.html">Volver al Menú Principal</a></button>
+    </div>
+
+    <script>
+        function toggleAdvice(adviceId) {
+            const adviceElement = document.getElementById(adviceId);
+            if (adviceElement.style.display === "none") {
+                adviceElement.style.display = "block";
+            } else {
+                adviceElement.style.display = "none";
+            }
+        }
+
+        function checkAnswer(question, correctAnswer, progressId) {
+            const radios = document.getElementsByName(question);
+            let selectedAnswer;
+            for (const radio of radios) {
+                if (radio.checked) {
+                    selectedAnswer = radio.value;
+                    break;
+                }
+            }
+
+            const progressElement = document.getElementById(progressId);
+            if (selectedAnswer === correctAnswer) {
+                alert("¡Correcto!");
+                // Incrementa el progreso
+                progressElement.value = Math.min(progressElement.value + (100 / 3), 100); // Ajusta según el número total de preguntas
+            } else {
+                alert("Intenta de nuevo.");
+            }
+        }
+    </script>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+    
+      <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai"
+        const clave = "AIzaSyAjZOVluZpaKQk1NadmjXMqZ2yvnDAZbQo"  // copiar su clave
+    
+        const genAI = new GoogleGenerativeAI(clave)
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    
+        // Instrucción codificada directamente en el script
+        const consultaCodificada = "Dame una retroalimentacion corta, donde le expliques a un niño como realizar correctamente una suma, se lo mas breve posible, intenta que tu repuesta haga un salto de linea cada 10 palabras";
+    
+        document.querySelector("#botonConsulta").addEventListener("click", async () => {
+          desactivarBoton();
+          const resultadoConsulta = document.querySelector("#resultadoConsulta");
+          try {
+            const result = await model.generateContent(consultaCodificada);
+            const response = await result.response;
+            const text = await response.text();
+            resultadoConsulta.innerHTML = text;
+          } catch (error) {
+            resultadoConsulta.innerHTML = 'Problemas en la consulta';
+          }
+          activarBoton();
+        });
+    
+        function desactivarBoton() {
+          const botonConsulta = document.querySelector("#botonConsulta");
+          botonConsulta.disabled = true;
+          botonConsulta.innerText = "Generando...";
+        }
+    
+        function activarBoton() {
+          const botonConsulta = document.querySelector("#botonConsulta");
+          botonConsulta.disabled = false;
+          botonConsulta.innerText = "Generar Respuesta";
+        }
+      </script>
+    <script>
+        document.getElementById('notifyButton').addEventListener('click', function() {
+            alert('¡Has concluido el primer modulo!');
+        });
+    </script>
+    
+</body>
+</html>
+

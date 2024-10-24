@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+}
+h1 {
+    color: #333;
+}
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.avatar {
+    margin: 0 20px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.avatar.selected {
+    border-color:rgb(228, 93, 63);
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color:rgb(228, 93, 63);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgb(231, 136, 114);
+}
+A{
+    text-decoration: NONE;
+    color: white;
+}

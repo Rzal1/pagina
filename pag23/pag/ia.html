@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="sum.css">
+    <meta charset="UTF-8">
+    <title>Ejercicios de Suma con Google Gemini</title>
+    <style>
+    </style>
+</head>
+<body>
+    <h1>Ejercicios de Suma</h1>
+    <div>
+        <button id="generateButton">Generar pregunta</button>
+    </div>
+    <div class="exercise">
+        <p id="question">Haz clic en "Generar pregunta" para empezar.</p>
+        <input type="number" id="answer">
+        <button id="checkButton">Verificar respuesta</button>
+    </div>
+    <div id="result"></div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "@google/generative-ai": "https://esm.run/@google/generative-ai"
+            }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Reemplaza 'YOUR_API_KEY' con tu clave de API real
+        const API_KEY = 'AIzaSyCI5hstugGxZfEVTVZgBlfZHjkWTjdgZF0';
+        const genAI = new GoogleGenerativeAI(API_KEY);
+
+        document.getElementById('generateButton').addEventListener('click', async () => {
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+            const prompt = 'Genera un ejercicio de suma para niños de primaria.';
+            try {
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                document.getElementById('question').innerText = response.text().trim();
+            } catch (error) {
+                console.error('Error al generar contenido:', error);
+                document.getElementById('question').innerText = 'Error al generar la pregunta. Revisa la consola para más detalles.';
+            }
+        });
+
+        document.getElementById('checkButton').addEventListener('click', async () => {
+            const question = document.getElementById('question').innerText;
+            const userAnswer = document.getElementById('answer').value;
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+            const prompt = `Pregunta: ${question}. Respuesta del usuario: ${userAnswer}. ¿Es correcto?`;
+            try {
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                document.getElementById('result').innerText = response.text().trim();
+            } catch (error) {
+                console.error('Error al verificar la respuesta:', error);
+                document.getElementById('result').innerText = 'Error al verificar la respuesta. Revisa la consola para más detalles.';
+            }
+        });
+    </script>
+    <button><a href="mate.html">REGRESAR AL MENU ANTERIOR</a></button>
+    <button><a href="ia.html">SIGUIENTE EJERCICIO</a></button>
+</body>
+</html>
